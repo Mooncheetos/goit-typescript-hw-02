@@ -1,0 +1,19 @@
+.loadBtn {
+    width: max-content;
+    display: flex;
+    justify-content: center;
+    border: 3px solid #e3dce2;
+    background-color: transparent;
+    color: #ffffff;
+    font-size: 24px;
+    border-radius: 10px;
+    padding: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    transition: background-color 300ms ease-out;
+}
+
+.loadBtn:hover,
+.loadBtn:focus {
+    background-color: #836666;
+}

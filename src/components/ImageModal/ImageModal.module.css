@@ -1,0 +1,15 @@
+.modalImage {
+    width: 90vh;
+    height: 90vh;
+    object-fit: cover;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+}

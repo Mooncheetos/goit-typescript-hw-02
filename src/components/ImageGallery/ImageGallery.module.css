@@ -1,0 +1,13 @@
+.ImageList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    justify-content: center;
+}
+
+.ImageItem {
+    border-radius: 10px;
+    border: 3px solid #e3dce2;
+    overflow: hidden;
+    cursor: pointer;
+}
