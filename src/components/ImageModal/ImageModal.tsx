@@ -1,5 +1,8 @@
 import css from "./ImageModal.module.css";
 import Modal from "react-modal";
+import { ImageType } from "../types";
+import { FC } from "react";
+Modal.setAppElement("#root");
 
 const customStyles = {
     overlay: {
@@ -16,7 +19,14 @@ const customStyles = {
     },
 };
 
-function ImageModal({ image, onClose, isOpen }) {
+interface ImageModalProps {
+    isOpen: boolean;
+    onClose: () => void;    
+    image: ImageType | null;
+}
+
+const ImageModal: FC<ImageModalProps> = ({ image, onClose, isOpen }) => {
+    if (!image) return null;
     return (
         <div>
             <Modal isOpen={isOpen} onRequestClose={onClose} shouldCloseOnOverlayClick={true} style={customStyles}>

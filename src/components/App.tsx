@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import ImageModal from "./ImageModal/ImageModal";
@@ -7,27 +7,39 @@ import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import LoadMore from "./LoadMoreBtn/LoadMoreBtn";
 import SearchBar from "./SearchBar/SearchBar";
 import { requestImagesByQuery } from "./services/api";
+import { ImageType } from "./types";
 import "./App.css";
 
-function App() {
-  const [images, setImages] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [page, setPage] = useState(1);
-  const [query, setQuery] = useState("");
-  // const [showBtn, setShowBtn] = useState(false);
+interface ImageResponse {
+  results: ImageType[];
+  total_pages: number;
+}
+
+const App: FC = () => {
+  const [images, setImages] = useState<ImageType[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
+  const [page, setPage] = useState<number>(1);
+  const [query, setQuery] = useState<string>("");
+    // const [showBtn, setShowBtn] = useState<boolean>(false);
 
   useEffect(() => {
     if (!query) return;
-    async function fetchImagesByQuery() {
+    async function fetchImagesByQuery(): Promise<void> {
       try {
         setLoading(true);
         setError(false);
-        const { results, total_pages } = await requestImagesByQuery(query, page);
+        const { results, total_pages }: ImageResponse = await requestImagesByQuery(query, page);
         if (page > 1) {
-          setImages((prevImages) => [...prevImages, ...results]);
+          setImages((prevImages: ImageType[] | null) => {
+            if (prevImages === null) {
+            return results;          
+        } else {
+          return [...prevImages, ...results];
+        }
+          });
         } else {
           setImages(results);
         }
@@ -41,7 +53,7 @@ function App() {
     fetchImagesByQuery();
   }, [query, page]);
   
-  const handleSearch = (inputValue) => {
+  const handleSearch = (inputValue: string): void => {
     if (inputValue !== query) {
       setQuery(inputValue);
       setPage(1);
@@ -49,7 +61,7 @@ function App() {
     }
   };
 
-  const handleImageClick = (image) => {
+  const handleImageClick = (image: ImageType | null): void => {
     setSelectedImage(image);
     openModal();
   };
@@ -58,15 +70,15 @@ function App() {
     setPage((page) => page + 1);
   };
 
-  // const loadMoreImages = () => {
+  // const loadMoreImages = (): void => {
   //   setPage((prevPage) => prevPage + 1);
   // };
   
-  const openModal = () => {
+  const openModal = ():void => {
     setModalIsOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = ():void => {
     setModalIsOpen(false);
   };
 

@@ -1,7 +1,12 @@
 import { Link } from "react-scroll";
 import css from "./LoadMoreBtn.module.css";
+import { FC } from "react";
 
-const LoadMore = ({ loadMore }) => {
+interface LoadMoreBtnProps {
+  loadMore: () => void;
+}
+
+const LoadMore: FC<LoadMoreBtnProps> = ({ loadMore }) => {
   return (
     <div>
       <Link
